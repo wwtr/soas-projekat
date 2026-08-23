@@ -1,0 +1,27 @@
+# Maven
+target/
+*.jar
+*.war
+*.class
+
+# IDE
+.idea/
+*.iml
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# Node / frontend
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# Logovi i sistemski fajlovi
+*.log
+.DS_Store
+Thumbs.db
