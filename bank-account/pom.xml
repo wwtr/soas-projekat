@@ -12,10 +12,9 @@
     </parent>
 
     <groupId>com.soas</groupId>
-    <artifactId>service-library</artifactId>
+    <artifactId>bank-account</artifactId>
     <version>1.0.0</version>
-    <name>service-library</name>
-    <description>DTO objekti, Feign proxy-ji i pomocne komponente</description>
+    <name>bank-account</name>
 
     <properties>
         <java.version>17</java.version>
@@ -28,8 +27,26 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.soas</groupId>
+            <artifactId>service-library</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.soas</groupId>
@@ -49,5 +66,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

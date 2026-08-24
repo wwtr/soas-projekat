@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
-/**
- * Globalno upravljanje izuzecima za sve mikroservise.
- *
- * Da bi mikroservis pokupio ovu klasu, njegova glavna klasa mora imati:
- *   @SpringBootApplication(scanBasePackages = "com.soas")
- */
+// da bi mikroservis pokupio ovu klasu, njegova main klasa mora imati
+// @SpringBootApplication(scanBasePackages = "com.soas")
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -54,9 +50,7 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), request);
     }
 
-    /**
-     * Greska prilikom Feign poziva ka drugom mikroservisu.
-     */
+    // greska prilikom Feign poziva ka drugom mikroservisu
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> handleFeign(FeignException ex,
                                                      HttpServletRequest request) {
@@ -67,9 +61,7 @@ public class GlobalExceptionHandler {
         return build(status, message, request);
     }
 
-    /**
-     * Sigurnosna mreza - nijedan izuzetak ne sme da izadje kao stack-trace.
-     */
+    // sigurnosna mreza - nijedan izuzetak ne sme da izadje kao stack-trace
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAll(Exception ex, HttpServletRequest request) {
         return build(HttpStatus.INTERNAL_SERVER_ERROR,

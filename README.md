@@ -4,8 +4,7 @@ Projekat iz predmeta Servisno orijentisana arhitektura sistema.
 
 ## Status
 
-U izradi. Dokumentacija sa svim URL-ovima i kredencijalima bice popunjena
-pred predaju projekta.
+U izradi.
 
 ## Mikroservisi
 
@@ -20,8 +19,3 @@ pred predaju projekta.
 | trade-service | 8600 |
 | api-gateway | 8765 |
 | users-service | 8770 |
-
-## Zavisnosti
-
-- `util` - globalno upravljanje izuzecima
-- `service-library` - DTO objekti, Feign proxy-ji i pomocne komponente

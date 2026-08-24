@@ -2,9 +2,6 @@ package com.soas.servicelibrary.dto;
 
 import java.math.BigDecimal;
 
-/**
- * Jedan red crypto novcanika: koliko odredjene crypto valute korisnik poseduje.
- */
 public class CryptoWalletDto {
 
     private Long id;

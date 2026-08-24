@@ -2,9 +2,6 @@ package com.soas.servicelibrary.dto;
 
 import java.math.BigDecimal;
 
-/**
- * Jedan red bankovnog racuna: koliko odredjene fiat valute korisnik poseduje.
- */
 public class BankAccountDto {
 
     private Long id;

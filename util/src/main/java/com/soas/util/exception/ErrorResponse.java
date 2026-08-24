@@ -2,10 +2,6 @@ package com.soas.util.exception;
 
 import java.time.LocalDateTime;
 
-/**
- * Jedinstveni format odgovora za sve greske u sistemu.
- * Korisnik nikada ne sme da dobije stack-trace.
- */
 public class ErrorResponse {
 
     private LocalDateTime timestamp;
