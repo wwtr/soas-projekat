@@ -72,6 +72,11 @@ public class BankAccountController {
 
     // endpointi ispod poziva users-service odnosno servisi za razmenu, ne korisnik direktno
 
+    @GetMapping("/internal/{email}")
+    public List<BankAccountDto> getForUserInternal(@PathVariable("email") String email) {
+        return service.findAllForUser(email);
+    }
+
     @PostMapping("/internal/{email}")
     public BankAccountDto createStartingAccount(@PathVariable("email") String email) {
         return service.createStartingAccount(email);

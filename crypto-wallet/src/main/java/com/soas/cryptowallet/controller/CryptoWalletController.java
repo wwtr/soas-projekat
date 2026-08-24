@@ -72,6 +72,11 @@ public class CryptoWalletController {
 
     // endpointi ispod poziva users-service odnosno servisi za razmenu, ne korisnik direktno
 
+    @GetMapping("/internal/{email}")
+    public List<CryptoWalletDto> getForUserInternal(@PathVariable("email") String email) {
+        return service.findAllForUser(email);
+    }
+
     @PostMapping("/internal/{email}")
     public CryptoWalletDto createStartingWallet(@PathVariable("email") String email) {
         return service.createStartingWallet(email);

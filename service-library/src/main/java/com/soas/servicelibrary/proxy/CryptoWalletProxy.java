@@ -22,6 +22,9 @@ public interface CryptoWalletProxy {
     CryptoWalletDto getWallet(@PathVariable("email") String email,
                               @PathVariable("cryptoCode") String cryptoCode);
 
+    @GetMapping("/crypto-wallet/internal/{email}")
+    List<CryptoWalletDto> getWalletsInternal(@PathVariable("email") String email);
+
     @PostMapping("/crypto-wallet/internal/{email}")
     CryptoWalletDto createStartingWallet(@PathVariable("email") String email);
 

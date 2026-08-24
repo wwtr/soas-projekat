@@ -89,6 +89,10 @@ public class CryptoWalletService {
 
     // ---- pozivi koji stizu od drugih mikroservisa preko Feign-a ----
 
+    public List<CryptoWalletDto> findAllForUser(String email) {
+        return repository.findByEmail(email).stream().map(this::toDto).toList();
+    }
+
     @Transactional
     public CryptoWalletDto createStartingWallet(String email) {
         return repository.findByEmailAndCryptoCode(email, STARTING_CRYPTO)

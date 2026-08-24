@@ -22,6 +22,9 @@ public interface BankAccountProxy {
     BankAccountDto getAccount(@PathVariable("email") String email,
                               @PathVariable("currencyCode") String currencyCode);
 
+    @GetMapping("/bank-account/internal/{email}")
+    List<BankAccountDto> getAccountsInternal(@PathVariable("email") String email);
+
     @PostMapping("/bank-account/internal/{email}")
     BankAccountDto createStartingAccount(@PathVariable("email") String email);
 

@@ -89,6 +89,10 @@ public class BankAccountService {
 
     // ---- pozivi koji stizu od drugih mikroservisa preko Feign-a ----
 
+    public List<BankAccountDto> findAllForUser(String email) {
+        return repository.findByEmail(email).stream().map(this::toDto).toList();
+    }
+
     @Transactional
     public BankAccountDto createStartingAccount(String email) {
         return repository.findByEmailAndCurrencyCode(email, STARTING_CURRENCY)
