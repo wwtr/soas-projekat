@@ -1,8 +1,8 @@
-package com.soas.currencyexchange.service;
+package com.soas.cryptoexchange.service;
 
+import com.soas.servicelibrary.dto.CoinbaseRatesResponse;
 import com.soas.servicelibrary.dto.CurrencyExchangeDto;
-import com.soas.servicelibrary.dto.ExchangeRateApiResponse;
-import com.soas.servicelibrary.proxy.ExchangeRateApiProxy;
+import com.soas.servicelibrary.proxy.CryptoRateApiProxy;
 import com.soas.util.exception.ExternalApiException;
 import com.soas.util.exception.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,14 +12,14 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 @Service
-public class CurrencyExchangeService {
+public class CryptoExchangeService {
 
-    private final ExchangeRateApiProxy apiProxy;
+    private final CryptoRateApiProxy apiProxy;
 
     @Value("${server.port}")
     private String port;
 
-    public CurrencyExchangeService(ExchangeRateApiProxy apiProxy) {
+    public CryptoExchangeService(CryptoRateApiProxy apiProxy) {
         this.apiProxy = apiProxy;
     }
 
@@ -31,39 +31,24 @@ public class CurrencyExchangeService {
             return new CurrencyExchangeDto(source, target, BigDecimal.ONE, port);
         }
 
-        ExchangeRateApiResponse response;
+        CoinbaseRatesResponse response;
         try {
             response = apiProxy.getRates(source);
         } catch (Exception ex) {
-            throw new ExternalApiException("Servis za kurseve fiat valuta trenutno nije dostupan");
+            throw new ExternalApiException("Servis za kurseve crypto valuta trenutno nije dostupan");
         }
 
-        if (response == null || !"success".equalsIgnoreCase(response.getResult())) {
+        if (response == null || response.getData() == null || response.getData().getRates() == null) {
             throw new InvalidRequestException("Valuta " + source + " nije podrzana");
         }
 
-        Map<String, BigDecimal> rates = response.getRates();
-        BigDecimal rate = rates == null ? null : rates.get(target);
+        Map<String, BigDecimal> rates = response.getData().getRates();
+        BigDecimal rate = rates.get(target);
         if (rate == null) {
             throw new InvalidRequestException("Valuta " + target + " nije podrzana");
         }
 
         return new CurrencyExchangeDto(source, target, rate, port);
-    }
-
-    // er-api vraca iskljucivo fiat valute, pa je prisustvo koda u toj listi dovoljna provera
-    public boolean isFiat(String code) {
-        String currency = normalize(code);
-        if ("EUR".equals(currency)) {
-            return true;
-        }
-        try {
-            ExchangeRateApiResponse response = apiProxy.getRates("EUR");
-            return response != null && response.getRates() != null
-                    && response.getRates().containsKey(currency);
-        } catch (Exception ex) {
-            throw new ExternalApiException("Servis za kurseve fiat valuta trenutno nije dostupan");
-        }
     }
 
     private String normalize(String code) {
