@@ -4,6 +4,7 @@ import com.soas.servicelibrary.dto.UserDto;
 import com.soas.servicelibrary.security.AuthHeaders;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,11 @@ public class AuthenticationFilter implements WebFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        // preflight zahtev brauzera nema kredencijale, njega resava CORS filter
+        if (HttpMethod.OPTIONS.equals(exchange.getRequest().getMethod())) {
+            return chain.filter(exchange);
+        }
+
         String path = exchange.getRequest().getPath().value();
 
         // interne rute sluze samo za komunikaciju medju servisima i ne izlaze napolje
@@ -108,6 +114,7 @@ public class AuthenticationFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        // odmah posle CORS filtera
+        return Ordered.HIGHEST_PRECEDENCE + 10;
     }
 }
